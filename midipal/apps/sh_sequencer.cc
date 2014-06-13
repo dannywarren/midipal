@@ -192,8 +192,9 @@ uint8_t ShSequencer::OnClick() {
       case 0:
       case 1:
         sequence_data_[num_steps_] = 0xff - rec_mode_menu_option_;
-        app.SaveSetting(num_steps_ + 9);
+        app.SaveSetting(9 + num_steps_);
         ++num_steps_;
+        app.SaveSetting(8);
         if (num_steps_ == kShSequencerNumSteps) {
           recording_ = 0;
         }
@@ -286,8 +287,10 @@ void ShSequencer::OnNoteOn(uint8_t channel, uint8_t note, uint8_t velocity) {
   uint8_t just_started = 0;
   if (recording_) {
     sequence_data_[num_steps_] = note;
-    app.SaveSetting(num_steps_ + 9);
+    app.SaveSetting(9 + num_steps_);
     ++num_steps_;
+    app.SaveSetting(8);
+    
     if (num_steps_ == kShSequencerNumSteps) {
       recording_ = 0;
     }

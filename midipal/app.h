@@ -120,9 +120,6 @@ class App {
     }
   }
   static void OnNoteOn(uint8_t channel, uint8_t note, uint8_t velocity) {
-    if (velocity) {
-      NoteClock(channel, note);
-    }
     if (app_info_.OnNoteOn) {
       (*app_info_.OnNoteOn)(channel, note, velocity);
     }
