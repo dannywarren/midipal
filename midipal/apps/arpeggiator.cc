@@ -153,7 +153,7 @@ void Arpeggiator::OnContinue() {
 
 /* static */
 void Arpeggiator::OnStart() {
-  if (clk_mode_ != CLOCK_MODE_INTERNAL && !running_) {
+  if (clk_mode_ != CLOCK_MODE_INTERNAL) {
     Start();
   }
 }
