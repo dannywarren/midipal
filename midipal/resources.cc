@@ -253,6 +253,7 @@ static const prog_char str_res_res[] PROGMEM = "res";
 static const prog_char str_res_fre[] PROGMEM = "fre";
 static const prog_char str_res_prg[] PROGMEM = "prg";
 static const prog_char str_res_pre[] PROGMEM = "pre";
+static const prog_char str_res_arp[] PROGMEM = "arp";
 static const prog_char str_res_nuk[] PROGMEM = "nuk";
 
 
@@ -493,6 +494,7 @@ PROGMEM const prog_char* string_table[] = {
   str_res_chd,
   str_res_prg,
   str_res_pre,
+  str_res_arp,
   str_res_nuk,
 };
 
