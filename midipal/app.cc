@@ -104,20 +104,20 @@ const AppInfo* registry[] = {
 
   &apps::CcKnob::app_info_,
 
-  &apps::DrumPatternGenerator::app_info_,
+//  &apps::DrumPatternGenerator::app_info_,
   &apps::Randomizer::app_info_,
   &apps::ChordMemory::app_info_,
   &apps::Arpeggiator::app_info_,
   &apps::Delay::app_info_,
   &apps::ScaleProcessor::app_info_,
 #ifdef USE_SH_SEQUENCER
-  &apps::ShSequencer::app_info_,
+//  &apps::ShSequencer::app_info_,
 #else
-  &apps::Sequencer::app_info_,
+//  &apps::Sequencer::app_info_,
 #endif  // USE_SH_SEQUENCER
-  &apps::Lfo::app_info_,
+//  &apps::Lfo::app_info_,
 
-  &apps::Tanpura::app_info_,
+//  &apps::Tanpura::app_info_,
   
   &apps::GenericFilter::app_info_,
   &apps::Settings::app_info_
