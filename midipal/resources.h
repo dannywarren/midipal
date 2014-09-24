@@ -317,6 +317,7 @@ extern const prog_uint8_t wav_res_lfo_waveforms[] PROGMEM;
 #define STR_RES__CHD 233  // chd
 #define STR_RES_PRG 234  // prg
 #define STR_RES_PRE 235  // pre
+#define STR_RES_NUK 236  // nuk
 #define LUT_RES_ARPEGGIATOR_PATTERNS 0
 #define LUT_RES_ARPEGGIATOR_PATTERNS_SIZE 24
 #define LUT_RES_DRUM_PATTERNS 1
