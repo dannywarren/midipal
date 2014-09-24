@@ -105,7 +105,7 @@ void Ui::Poll() {
   }
   if (encoder_.immediate_value() == 0x00) {
     ++encoder_hold_time_;
-    if (encoder_hold_time_ > 15000) {
+    if (encoder_hold_time_ > 7500) {
       queue_.AddEvent(CONTROL_ENCODER_CLICK, 0, 0xff);
     }
   }
