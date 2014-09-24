@@ -413,7 +413,6 @@ void Arpeggiator::SetParameter(uint8_t key, uint8_t value) {
     pattern_length_ = arpeggiator_presets[preset_][3];
 
     current_direction_ = (direction_ == ARPEGGIO_DIRECTION_DOWN ? -1 : 1);
-    StartArpeggio();
   }
 }
 
