@@ -69,7 +69,6 @@ class Arpeggiator {
   static uint8_t duration_;
   static uint8_t latch_;
   static uint8_t notenuke_;
-  static uint8_t arpstart_;
   static uint8_t preset_;
   
   static uint8_t midi_clock_prescaler_;
