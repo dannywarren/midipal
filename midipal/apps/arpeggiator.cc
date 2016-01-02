@@ -47,7 +47,7 @@ const prog_uint8_t arpeggiator_factory_data[14] PROGMEM = {
   0, 120, 0, 0, 0, 0, 1, 0, 16, 12, 14, 0, 0, 0
 };
 
-const prog_uint8_t arpeggiator_presets[5][4] = {
+const prog_uint8_t arpeggiator_presets[6][4] = {
 
   { 0, 1, 0, 16 },    // up, 1 octave, normal time
   { 0, 2, 0, 16 },    // up, 2 octaves, normal time
@@ -135,7 +135,7 @@ void Arpeggiator::OnInit() {
   ui.AddPage(STR_RES_DUR, STR_RES_2_1, 0, 16);
   ui.AddPage(STR_RES_LAT, STR_RES_OFF, 0, 1);
   ui.AddPage(STR_RES_NUK, STR_RES_OFF, 0, 1);
-  ui.AddPage(STR_RES_PRE, UNIT_INDEX, 0, 4);
+  ui.AddPage(STR_RES_PRE, UNIT_INDEX, 0, 5);
   
   clock.Update(bpm_, groove_template_, groove_amount_);
   SetParameter(9, clock_division_);  // Force an update of the prescaler.
