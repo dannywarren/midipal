@@ -105,14 +105,14 @@ void Ui::Poll() {
   }
   if (encoder_.immediate_value() == 0x00) {
     ++encoder_hold_time_;
-    if (encoder_hold_time_ > 800) {
+    if (encoder_hold_time_ > 15000) {
       queue_.AddEvent(CONTROL_ENCODER_CLICK, 0, 0xff);
     }
   }
   if (encoder_.clicked()) {
     // Do not enqueue a click event when the encoder is released after a long
     // press.
-    if (encoder_hold_time_ <= 800) {
+    if (encoder_hold_time_ <= 2500) { 
       queue_.AddEvent(CONTROL_ENCODER_CLICK, 0, 1);
     }
     encoder_hold_time_ = 0;

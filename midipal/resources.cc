@@ -21,7 +21,7 @@
 // make resources
 
 
-#include "midipal/resources.h"
+#include "midipal\resources.h"
 
 namespace midipal {
 
@@ -51,7 +51,7 @@ static const prog_char str_res_settings[] PROGMEM = "settings";
 static const prog_char str_res_notenuke[] PROGMEM = "notenuke";
 static const prog_char str_res_sysxdump[] PROGMEM = "sysxdump";
 static const prog_char str_res__reset_[] PROGMEM = "!reset!";
-static const prog_char str_res___v1_4__[] PROGMEM = "¥ v1.4 ¥";
+static const prog_char str_res__v1_4dg_[] PROGMEM = "¥v1.4dg¥";
 static const prog_char str_res_sndoff[] PROGMEM = "sndOff";
 static const prog_char str_res_rstctr[] PROGMEM = "rstCtr";
 static const prog_char str_res_lclctr[] PROGMEM = "lclCtr";
@@ -252,6 +252,9 @@ static const prog_char str_res_sa[] PROGMEM = "sa";
 static const prog_char str_res_res[] PROGMEM = "res";
 static const prog_char str_res_fre[] PROGMEM = "fre";
 static const prog_char str_res_prg[] PROGMEM = "prg";
+static const prog_char str_res_pre[] PROGMEM = "pre";
+static const prog_char str_res_arp[] PROGMEM = "arp";
+static const prog_char str_res_nuk[] PROGMEM = "nuk";
 
 
 PROGMEM const prog_char* string_table[] = {
@@ -281,7 +284,7 @@ PROGMEM const prog_char* string_table[] = {
   str_res_notenuke,
   str_res_sysxdump,
   str_res__reset_,
-  str_res___v1_4__,
+  str_res__v1_4dg_,
   str_res_sndoff,
   str_res_rstctr,
   str_res_lclctr,
@@ -490,12 +493,15 @@ PROGMEM const prog_char* string_table[] = {
   str_res_not,
   str_res_chd,
   str_res_prg,
+  str_res_pre,
+  str_res_arp,
+  str_res_nuk,
 };
 
 const prog_uint16_t lut_res_arpeggiator_patterns[] PROGMEM = {
-   21845,  62965,  46517,  54741,  43861,  22869,  38293,   2313,
-   37449,  21065,  18761,  54553,  27499,  23387,  30583,  28087,
-   22359,  28527,  30431,  43281,  28609,  53505,
+   21845,   4369,   4681,  62965,  46517,  54741,  43861,  22869,
+   38293,   2313,  37449,  21065,  18761,  54553,  27499,  23387,
+   30583,  28087,  22359,  28527,  30431,  43281,  28609,  53505,
 };
 const prog_uint16_t lut_res_drum_patterns[] PROGMEM = {
        0,  18705,   4369,  18761,   1281,    257,  21065,    261,

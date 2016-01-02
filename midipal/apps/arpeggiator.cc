@@ -43,9 +43,21 @@ enum ArpeggiatorDirection {
   ARPEGGIO_DIRECTION_CHORD
 };
 
-const prog_uint8_t arpeggiator_factory_data[12] PROGMEM = {
-  0, 120, 0, 0, 0, 0, 1, 0, 16, 12, 14, 0
+const prog_uint8_t arpeggiator_factory_data[14] PROGMEM = {
+  0, 120, 0, 0, 0, 0, 1, 0, 16, 12, 14, 0, 0, 0
 };
+
+const prog_uint8_t arpeggiator_presets[5][4] = {
+
+  { 0, 1, 0, 16 },    // up, 1 octave, normal time
+  { 0, 2, 0, 16 },    // up, 2 octaves, normal time
+  { 0, 1, 1, 16 },    // up, 1 octave, half time
+  { 1, 2, 1, 16 },    // down, 2 octaves, half time
+  { 2, 2, 0, 16 },    // up+down, 2 octaves, normal time
+  { 2, 1, 0, 16 },    // up+down, 1 octaves, normal time
+
+};
+
 
 /* <static> */
 uint8_t Arpeggiator::running_;
@@ -62,6 +74,8 @@ uint8_t Arpeggiator::pattern_length_;
 uint8_t Arpeggiator::clock_division_;
 uint8_t Arpeggiator::duration_;
 uint8_t Arpeggiator::latch_;
+uint8_t Arpeggiator::notenuke_;
+uint8_t Arpeggiator::preset_;
 
 uint8_t Arpeggiator::midi_clock_prescaler_;
 
@@ -101,7 +115,7 @@ const prog_AppInfo Arpeggiator::app_info_ PROGMEM = {
   &SetParameter, // void (*SetParameter)(uint8_t, uint8_t);
   NULL, // uint8_t (*GetParameter)(uint8_t);
   NULL, // uint8_t (*CheckPageStatus)(uint8_t);
-  12, // settings_size
+  14, // settings_size
   SETTINGS_ARPEGGIATOR, // settings_offset
   &clk_mode_, // settings_data
   arpeggiator_factory_data, // factory_data
@@ -115,11 +129,13 @@ void Arpeggiator::OnInit() {
   ui.AddPage(STR_RES_CHN, UNIT_INDEX, 0, 15);
   ui.AddPage(STR_RES_DIR, STR_RES_UP, 0, 5);
   ui.AddPage(STR_RES_OCT, UNIT_INTEGER, 1, 4);
-  ui.AddPage(STR_RES_PTN, UNIT_INDEX, 0, 21);
+  ui.AddPage(STR_RES_PTN, UNIT_INDEX, 0, 23);
   ui.AddPage(STR_RES_LEN, UNIT_INTEGER, 1, 16);
   ui.AddPage(STR_RES_DIV, STR_RES_2_1, 0, 16);
   ui.AddPage(STR_RES_DUR, STR_RES_2_1, 0, 16);
   ui.AddPage(STR_RES_LAT, STR_RES_OFF, 0, 1);
+  ui.AddPage(STR_RES_NUK, STR_RES_OFF, 0, 1);
+  ui.AddPage(STR_RES_PRE, UNIT_INDEX, 0, 4);
   
   clock.Update(bpm_, groove_template_, groove_amount_);
   SetParameter(9, clock_division_);  // Force an update of the prescaler.
@@ -153,7 +169,7 @@ void Arpeggiator::OnContinue() {
 
 /* static */
 void Arpeggiator::OnStart() {
-  if (clk_mode_ != CLOCK_MODE_INTERNAL && !running_) {
+  if (clk_mode_ != CLOCK_MODE_INTERNAL) {
     Start();
   }
 }
@@ -381,6 +397,25 @@ void Arpeggiator::SetParameter(uint8_t key, uint8_t value) {
       note_stack.Clear();
       recording_ = 0;
     }
+  }
+  if (key == 12) {
+    // Run the note nuke script from app_selector.c
+    if ( value )
+    {
+      note_stack.Clear();
+      for (uint8_t j = 0; j < 128; ++j) {
+        app.Send3(0x80 | channel_, j, 0);
+      }
+      notenuke_ = 0;
+    }
+  }
+  if (key == 13) {
+    direction_      = arpeggiator_presets[preset_][0];
+    num_octaves_    = arpeggiator_presets[preset_][1];
+    pattern_        = arpeggiator_presets[preset_][2];
+    pattern_length_ = arpeggiator_presets[preset_][3];
+
+    current_direction_ = (direction_ == ARPEGGIO_DIRECTION_DOWN ? -1 : 1);
   }
 }
 

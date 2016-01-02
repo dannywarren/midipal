@@ -107,7 +107,7 @@ extern const prog_uint8_t wav_res_lfo_waveforms[] PROGMEM;
 #define STR_RES_NOTENUKE 23  // notenuke
 #define STR_RES_SYSXDUMP 24  // sysxdump
 #define STR_RES__RESET_ 25  // !reset!
-#define STR_RES___V1_4__ 26  // ¥ v1.4 ¥
+#define STR_RES__V1_4DG_ 26  // ¥v1.4dg¥
 #define STR_RES_SNDOFF 27  // sndOff
 #define STR_RES_RSTCTR 28  // rstCtr
 #define STR_RES_LCLCTR 29  // lclCtr
@@ -316,8 +316,11 @@ extern const prog_uint8_t wav_res_lfo_waveforms[] PROGMEM;
 #define STR_RES___NOT 232  // not
 #define STR_RES__CHD 233  // chd
 #define STR_RES_PRG 234  // prg
+#define STR_RES_PRE 235  // pre
+#define STR_RES_ARP 236  // arp
+#define STR_RES_NUK 237  // nuk
 #define LUT_RES_ARPEGGIATOR_PATTERNS 0
-#define LUT_RES_ARPEGGIATOR_PATTERNS_SIZE 22
+#define LUT_RES_ARPEGGIATOR_PATTERNS_SIZE 24
 #define LUT_RES_DRUM_PATTERNS 1
 #define LUT_RES_DRUM_PATTERNS_SIZE 48
 #define LUT_RES_GROOVE_SWING 2
