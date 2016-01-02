@@ -126,13 +126,6 @@ const AppInfo* registry[] = {
 #endif  // POLY_SEQUENCER_FIRMWARE
 
 /* static */
-uint8_t App::note_clock_note_;
-
-/* static */
-bool App::note_clock_running_;
-
-
-/* static */
 void App::Init() {
   // Load settings.
   LoadSettings();
@@ -269,6 +262,25 @@ void App::RemoteControl(
     scaled_value += page.min;
     SetParameter(controller, scaled_value);
   }
+}
+
+/* static */
+bool App::NoteClock(bool on, uint8_t channel, uint8_t note) {
+  uint8_t note_clock_channel = apps::Settings::note_clock_channel();
+  uint8_t note_clock_note = apps::Settings::note_clock_note();
+  if (channel + 1 == note_clock_channel && note == note_clock_note) {
+    if (on) {
+      uint8_t steps = ResourcesManager::Lookup<uint8_t, uint8_t>(
+          midi_clock_tick_per_step,
+          apps::Settings::note_clock_ticks());
+      OnStart();
+      for (uint8_t i = 0; i < steps; ++i) {
+        OnClock(CLOCK_MODE_NOTE);
+      }
+    }
+    return true;
+  }
+  return false;
 }
 
 /* extern */
