@@ -36,10 +36,16 @@ class Settings {
  
   static uint8_t filter_active_sensing() { return filter_active_sensing_; }
   static uint8_t remote_control_channel() { return remote_control_channel_; }
+  static uint8_t note_clock_channel() { return note_clock_channel_; }
+  static uint8_t note_clock_note() { return note_clock_note_; }
+  static uint8_t note_clock_ticks() { return note_clock_ticks_; }
 
  private:
   static uint8_t filter_active_sensing_;
   static uint8_t remote_control_channel_;
+  static uint8_t note_clock_channel_;
+  static uint8_t note_clock_note_;
+  static uint8_t note_clock_ticks_;
   
   DISALLOW_COPY_AND_ASSIGN(Settings);
 };
