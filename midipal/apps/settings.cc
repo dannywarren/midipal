@@ -26,8 +26,8 @@
 
 namespace midipal { namespace apps {
 
-const prog_uint8_t settings_factory_data[2] PROGMEM = {
-  0, 0,
+const prog_uint8_t settings_factory_data[5] PROGMEM = {
+  0, 0, 16, 84, 12,
 };
 
 /* static */
@@ -35,6 +35,15 @@ uint8_t Settings::filter_active_sensing_;
 
 /* static */
 uint8_t Settings::remote_control_channel_;
+
+/* static */
+uint8_t Settings::note_clock_channel_;
+
+/* static */
+uint8_t Settings::note_clock_note_;
+
+/* static */
+uint8_t Settings::note_clock_ticks_;
 
 /* static */
 const prog_AppInfo Settings::app_info_ PROGMEM = {
@@ -54,7 +63,6 @@ const prog_AppInfo Settings::app_info_ PROGMEM = {
   NULL, // uint8_t (*CheckChannel)(uint8_t);
   &OnRawByte, // void (*OnRawByte)(uint8_t);
   NULL, // void (*OnRawMidiData)(uint8_t, uint8_t*, uint8_t, uint8_t);
-  NULL, // void (*OnInternalClockTick)();
   NULL, // uint8_t (*OnIncrement)(int8_t);
   NULL, // uint8_t (*OnClick)();
 #ifdef MIDIBUD_FIRMWARE
@@ -66,7 +74,7 @@ const prog_AppInfo Settings::app_info_ PROGMEM = {
   NULL, // void (*SetParameter)(uint8_t, uint8_t);
   NULL, // uint8_t (*GetParameter)(uint8_t);
   NULL, // uint8_t (*CheckPageStatus)(uint8_t);
-  2, // settings_size
+  5, // settings_size
   SETTINGS_SYSTEM_SETTINGS, // settings_offset
   &filter_active_sensing_, // settings_data
   settings_factory_data, // factory_data
@@ -77,6 +85,9 @@ const prog_AppInfo Settings::app_info_ PROGMEM = {
 void Settings::OnInit() {
   ui.AddPage(STR_RES_XFE, STR_RES_LET, 0, 1);
   ui.AddPage(STR_RES_CCC, UNIT_INTEGER, 0, 16);
+  ui.AddPage(STR_RES_CLC, UNIT_INTEGER, 1, 16);
+  ui.AddPage(STR_RES_CLN, UNIT_NOTE, 24, 108);
+  ui.AddPage(STR_RES_DIV, STR_RES_2_1, 0, 16);
 }
 
 /* static */
