@@ -44,7 +44,7 @@ enum ArpeggiatorDirection {
 };
 
 const prog_uint8_t arpeggiator_factory_data[15] PROGMEM = {
-  0, 120, 0, 0, 0, 0, 1, 0, 16, 12, 14, 0, 0, 1, 0
+  1, 120, 0, 0, 15, 0, 1, 0, 16, 12, 14, 0, 0, 1, 0
 };
 
 const prog_uint8_t arpeggiator_presets[6][4] = {
