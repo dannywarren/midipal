@@ -43,8 +43,8 @@ enum ArpeggiatorDirection {
   ARPEGGIO_DIRECTION_CHORD
 };
 
-const prog_uint8_t arpeggiator_factory_data[14] PROGMEM = {
-  0, 120, 0, 0, 0, 0, 1, 0, 16, 12, 14, 0, 0, 0
+const prog_uint8_t arpeggiator_factory_data[15] PROGMEM = {
+  0, 120, 0, 0, 0, 0, 1, 0, 16, 12, 14, 0, 0, 1, 0
 };
 
 const prog_uint8_t arpeggiator_presets[6][4] = {
@@ -75,6 +75,7 @@ uint8_t Arpeggiator::clock_division_;
 uint8_t Arpeggiator::duration_;
 uint8_t Arpeggiator::latch_;
 uint8_t Arpeggiator::notenuke_;
+uint8_t Arpeggiator::arpstart_;
 uint8_t Arpeggiator::preset_;
 
 uint8_t Arpeggiator::midi_clock_prescaler_;
@@ -115,7 +116,7 @@ const prog_AppInfo Arpeggiator::app_info_ PROGMEM = {
   &SetParameter, // void (*SetParameter)(uint8_t, uint8_t);
   NULL, // uint8_t (*GetParameter)(uint8_t);
   NULL, // uint8_t (*CheckPageStatus)(uint8_t);
-  14, // settings_size
+  15, // settings_size
   SETTINGS_ARPEGGIATOR, // settings_offset
   &clk_mode_, // settings_data
   arpeggiator_factory_data, // factory_data
@@ -135,6 +136,7 @@ void Arpeggiator::OnInit() {
   ui.AddPage(STR_RES_DUR, STR_RES_2_1, 0, 16);
   ui.AddPage(STR_RES_LAT, STR_RES_OFF, 0, 1);
   ui.AddPage(STR_RES_NUK, STR_RES_OFF, 0, 1);
+  ui.AddPage(STR_RES_ARP, STR_RES_OFF, 0, 1);
   ui.AddPage(STR_RES_PRE, UNIT_INDEX, 0, 5);
   
   clock.Update(bpm_, groove_template_, groove_amount_);
@@ -410,6 +412,16 @@ void Arpeggiator::SetParameter(uint8_t key, uint8_t value) {
     }
   }
   if (key == 13) {
+    // Toggle the arp running state to quiet the arp without losing
+    // our clock sync
+    if ( arpstart_ ) {
+      running_ = 0;
+    }
+    else {
+      running_ = 1;
+    }
+  }
+  if (key == 14) {
     direction_      = arpeggiator_presets[preset_][0];
     num_octaves_    = arpeggiator_presets[preset_][1];
     pattern_        = arpeggiator_presets[preset_][2];
