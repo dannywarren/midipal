@@ -425,6 +425,9 @@ void Arpeggiator::SetParameter(uint8_t key, uint8_t value) {
       notenuke_ = 0;
     }
   }
+  if (key == 13) {
+    note_stack.Clear();
+  }
   if (key == 14) {
     direction_      = arpeggiator_presets[preset_][0];
     num_octaves_    = arpeggiator_presets[preset_][1];
