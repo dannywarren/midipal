@@ -75,7 +75,7 @@ uint8_t Arpeggiator::clock_division_;
 uint8_t Arpeggiator::duration_;
 uint8_t Arpeggiator::latch_;
 uint8_t Arpeggiator::notenuke_;
-uint8_t Arpeggiator::arpstart_;
+uint8_t Arpeggiator::arp_on_;
 uint8_t Arpeggiator::preset_;
 
 uint8_t Arpeggiator::midi_clock_prescaler_;
@@ -154,12 +154,20 @@ void Arpeggiator::OnRawMidiData(
    uint8_t* data,
    uint8_t data_size,
    uint8_t accepted_channel) {
-  // Forward everything except note on for the selected channel.
-  if (status != (0x80 | channel_) && 
-      status != (0x90 | channel_) &&
-      (status != (0xb0 | channel_) || data[0] != kHoldPedal)) {
+  if (arp_on_)
+  {
+    // Forward everything except note on for the selected channel.
+    if (status != (0x80 | channel_) && 
+        status != (0x90 | channel_) &&
+        (status != (0xb0 | channel_) || data[0] != kHoldPedal)) {
+      app.Send(status, data, data_size);
+    }    
+  }
+  else
+  {
     app.Send(status, data, data_size);
   }
+
 }
 
 /* static */
@@ -215,7 +223,10 @@ void Arpeggiator::OnNoteOn(
     note_stack.Clear();
     recording_ = 1;
   }
-  note_stack.NoteOn(note, velocity);
+  if ( arp_on_ )
+  {
+    note_stack.NoteOn(note, velocity);
+  }
 }
 
 /* static */
@@ -223,16 +234,19 @@ void Arpeggiator::OnNoteOff(
     uint8_t channel,
     uint8_t note,
     uint8_t velocity) {
-  if ((clk_mode_ == CLOCK_MODE_NOTE && app.NoteClock(false, channel, note)) ||
-      channel != channel_ || ignore_note_off_messages_) {
-    return;
-  }
-  if (!latch_) {
-    note_stack.NoteOff(note);
-  } else {
-    if (note == note_stack.most_recent_note().note) {
-      recording_ = 0;
+  if ( arp_on_ )
+  {
+    if ((clk_mode_ == CLOCK_MODE_NOTE && app.NoteClock(false, channel, note)) ||
+        channel != channel_ || ignore_note_off_messages_) {
+      return;
     }
+    if (!latch_) {
+      note_stack.NoteOff(note);
+    } else {
+      if (note == note_stack.most_recent_note().note) {
+        recording_ = 0;
+      }
+    }    
   }
 }
 
@@ -409,16 +423,6 @@ void Arpeggiator::SetParameter(uint8_t key, uint8_t value) {
         app.Send3(0x80 | channel_, j, 0);
       }
       notenuke_ = 0;
-    }
-  }
-  if (key == 13) {
-    // Toggle the arp running state to quiet the arp without losing
-    // our clock sync
-    if ( arpstart_ ) {
-      running_ = 0;
-    }
-    else {
-      running_ = 1;
     }
   }
   if (key == 14) {
