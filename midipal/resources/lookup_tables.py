@@ -50,6 +50,9 @@ lookup_tables.append(
       'o--- o--- o--- o---',
       'o--o --o- -o-- o---',
 
+      'oooo -ooo o-oo oo-o',
+      'o-o- oo-o oooo -ooo',
+
       'o-o- oooo o-o- oooo',
       'o-o- oo-o o-o- oo-o',
       'o-o- o-oo o-o- o-oo',
