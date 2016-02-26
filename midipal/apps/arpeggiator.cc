@@ -47,8 +47,9 @@ const prog_uint8_t arpeggiator_factory_data[15] PROGMEM = {
   1, 120, 0, 0, 15, 0, 1, 0, 16, 12, 14, 0, 0, 1, 0
 };
 
-const prog_uint8_t arpeggiator_presets[6][5] = {
+const prog_uint8_t arpeggiator_presets[7][5] = {
 
+  { 0, 0, 0, 0,  0 },    // null entry for arp off
   { 0, 1, 0, 16, 0 },    // up, 1 octave, normal time, pattern
   { 0, 2, 0, 16, 1 },    // up, 2 octaves, normal time, pattern
   { 0, 1, 1, 16, 2 },    // up, 1 octave, half time, pattern
@@ -137,7 +138,7 @@ void Arpeggiator::OnInit() {
   ui.AddPage(STR_RES_LAT, STR_RES_OFF, 0, 1);
   ui.AddPage(STR_RES_NUK, STR_RES_OFF, 0, 1);
   ui.AddPage(STR_RES_ARP, STR_RES_OFF, 0, 1);
-  ui.AddPage(STR_RES_PRE, UNIT_INDEX, -1, 5);
+  ui.AddPage(STR_RES_PRE, UNIT_INDEX, 0, 6);
   
   clock.Update(bpm_, groove_template_, groove_amount_);
   SetParameter(9, clock_division_);  // Force an update of the prescaler.
@@ -431,8 +432,9 @@ void Arpeggiator::SetParameter(uint8_t key, uint8_t value) {
   // Preset selector
   if (key == 14) {
     // The first preset is always to disable the arp
-    if (preset_ < 0)
+    if (preset_ == 0)
     {
+      note_stack.Clear();
       arp_on_ = 0;
     }
     // Otheriwse, set up one of the actual presets
@@ -441,11 +443,13 @@ void Arpeggiator::SetParameter(uint8_t key, uint8_t value) {
       // Force the arp back on
       arp_on_ = 1;
 
+      int preset_num_ = preset_ - 1;
+
       // Set all preset values
-      direction_         = arpeggiator_presets[preset_][0];
-      num_octaves_       = arpeggiator_presets[preset_][1];
-      pattern_           = arpeggiator_presets[preset_][2];
-      pattern_length_    = arpeggiator_presets[preset_][3];
+      direction_         = arpeggiator_presets[preset_num_][0];
+      num_octaves_       = arpeggiator_presets[preset_num_][1];
+      pattern_           = arpeggiator_presets[preset_num_][2];
+      pattern_length_    = arpeggiator_presets[preset_num_][3];
       current_direction_ = (direction_ == ARPEGGIO_DIRECTION_DOWN ? -1 : 1);
     }
   }
