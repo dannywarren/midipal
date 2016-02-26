@@ -46,7 +46,7 @@ settings
 notenuke
 sysxdump
 !reset!
-\xa5v1.4ib\xa5
+\xa51.4dgl\xa5
 
 sndOff
 rstCtr
