@@ -320,7 +320,7 @@ extern const prog_uint8_t wav_res_lfo_waveforms[] PROGMEM;
 #define STR_RES_ARP 236  // arp
 #define STR_RES_NUK 237  // nuk
 #define LUT_RES_ARPEGGIATOR_PATTERNS 0
-#define LUT_RES_ARPEGGIATOR_PATTERNS_SIZE 26
+#define LUT_RES_ARPEGGIATOR_PATTERNS_SIZE 3
 #define LUT_RES_DRUM_PATTERNS 1
 #define LUT_RES_DRUM_PATTERNS_SIZE 48
 #define LUT_RES_GROOVE_SWING 2

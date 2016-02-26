@@ -499,10 +499,7 @@ PROGMEM const prog_char* string_table[] = {
 };
 
 const prog_uint16_t lut_res_arpeggiator_patterns[] PROGMEM = {
-   21845,   4369,   4681,  48623,  61365,  62965,  46517,  54741,
-   43861,  22869,  38293,   2313,  37449,  21065,  18761,  54553,
-   27499,  23387,  30583,  28087,  22359,  28527,  30431,  43281,
-   28609,  53505,
+   48623,  21845,  65532,
 };
 const prog_uint16_t lut_res_drum_patterns[] PROGMEM = {
        0,  18705,   4369,  18761,   1281,    257,  21065,    261,

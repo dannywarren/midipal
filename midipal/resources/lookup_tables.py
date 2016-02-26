@@ -46,39 +46,9 @@ def ConvertPatterns(patterns):
 
 lookup_tables.append(
   ('arpeggiator_patterns', ConvertPatterns([
-      'o-o- o-o- o-o- o-o-',
-      'o--- o--- o--- o---',
-      'o--o --o- -o-- o---',
-
       'oooo -ooo o-oo oo-o',
-      'o-o- oo-o oooo -ooo',
-
-      'o-o- oooo o-o- oooo',
-      'o-o- oo-o o-o- oo-o',
-      'o-o- o-oo o-o- o-oo',
-      'o-o- o-o- oo-o -o-o',
-      'o-o- o-o- o--o o-o-',
-      'o-o- o--o o-o- o--o',
-
-      'o--o ---- o--o ----',
-      'o--o --o- -o-- o--o',
-      'o--o --o- -o-- o-o-',
-      'o--o --o- o--o --o-',
-      'o--o o--- o-o- o-oo',
-
-      'oo-o -oo- oo-o -oo-',
-      'oo-o o-o- oo-o o-o-',
-
-      'ooo- ooo- ooo- ooo-',
-      'ooo- oo-o o-oo -oo-',
-      'ooo- o-o- ooo- o-o-',
-
-      'oooo -oo- oooo -oo-',
-      'oooo o-oo -oo- ooo-',
-
-      'o--- o--- o--o -o-o',
-      'o--- --oo oooo -oo-',
-      'o--- ---- o--- o-oo'])))
+      'o-o- o-o- o-o- o-o-',
+      '--oo oooo oooo oooo'])))
 
 lookup_tables.append(
   ('drum_patterns', ConvertPatterns([
