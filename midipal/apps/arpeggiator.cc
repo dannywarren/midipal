@@ -47,15 +47,20 @@ const prog_uint8_t arpeggiator_factory_data[15] PROGMEM = {
   1, 120, 0, 0, 15, 0, 1, 0, 16, 12, 14, 0, 0, 1, 0
 };
 
-const prog_uint8_t arpeggiator_presets[7][5] = {
+const prog_uint8_t arpeggiator_presets[6][5] = {
+
+  // up, down, up+down
+  // octaves
+  // normal or half time
+  // pattern length
+  // pattern
 
   { 0, 0, 0, 0,  0 },    // null entry for arp off
-  { 0, 1, 0, 16, 0 },    // up, 1 octave, normal time, pattern
-  { 0, 2, 0, 16, 1 },    // up, 2 octaves, normal time, pattern
-  { 0, 1, 1, 16, 2 },    // up, 1 octave, half time, pattern
-  { 1, 2, 1, 16, 3 },    // down, 2 octaves, half time, pattern
-  { 2, 2, 0, 16, 4 },    // up+down, 2 octaves, normal time, pattern
-  { 2, 1, 0, 16, 5 },    // up+down, 1 octaves, normal time, pattern
+  { 0, 1, 0, 16, 0 },    // goliath verse
+  { 0, 2, 0, 16, 1 },    // goliath chorus
+  { 0, 1, 0, 16, 0 },    // goliath verse alt
+  { 0, 1, 0, 16, 2 },    // darn fudge
+  { 0, 1, 0, 16, 2 },    // darn fudge alt
 
 };
 
@@ -138,7 +143,7 @@ void Arpeggiator::OnInit() {
   ui.AddPage(STR_RES_LAT, STR_RES_OFF, 0, 1);
   ui.AddPage(STR_RES_NUK, STR_RES_OFF, 0, 1);
   ui.AddPage(STR_RES_ARP, STR_RES_OFF, 0, 1);
-  ui.AddPage(STR_RES_PRE, UNIT_INDEX, 0, 6);
+  ui.AddPage(STR_RES_PRE, UNIT_INDEX, 0, 5);
   
   clock.Update(bpm_, groove_template_, groove_amount_);
   SetParameter(9, clock_division_);  // Force an update of the prescaler.
@@ -450,6 +455,9 @@ void Arpeggiator::SetParameter(uint8_t key, uint8_t value) {
       num_octaves_       = arpeggiator_presets[preset_num_][1];
       pattern_           = arpeggiator_presets[preset_num_][2];
       pattern_length_    = arpeggiator_presets[preset_num_][3];
+      pattern_           = arpeggiator_presets[preset_num_][4];
+
+      // Set the direction
       current_direction_ = (direction_ == ARPEGGIO_DIRECTION_DOWN ? -1 : 1);
     }
   }
