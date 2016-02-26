@@ -47,14 +47,14 @@ const prog_uint8_t arpeggiator_factory_data[15] PROGMEM = {
   1, 120, 0, 0, 15, 0, 1, 0, 16, 12, 14, 0, 0, 1, 0
 };
 
-const prog_uint8_t arpeggiator_presets[6][4] = {
+const prog_uint8_t arpeggiator_presets[6][5] = {
 
-  { 0, 1, 0, 16 },    // up, 1 octave, normal time
-  { 0, 2, 0, 16 },    // up, 2 octaves, normal time
-  { 0, 1, 1, 16 },    // up, 1 octave, half time
-  { 1, 2, 1, 16 },    // down, 2 octaves, half time
-  { 2, 2, 0, 16 },    // up+down, 2 octaves, normal time
-  { 2, 1, 0, 16 },    // up+down, 1 octaves, normal time
+  { 0, 1, 0, 16, 0 },    // up, 1 octave, normal time, pattern
+  { 0, 2, 0, 16, 1 },    // up, 2 octaves, normal time, pattern
+  { 0, 1, 1, 16, 2 },    // up, 1 octave, half time, pattern
+  { 1, 2, 1, 16, 3 },    // down, 2 octaves, half time, pattern
+  { 2, 2, 0, 16, 4 },    // up+down, 2 octaves, normal time, pattern
+  { 2, 1, 0, 16, 5 },    // up+down, 1 octaves, normal time, pattern
 
 };
 
