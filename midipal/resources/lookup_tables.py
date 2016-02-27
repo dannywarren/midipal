@@ -47,7 +47,7 @@ def ConvertPatterns(patterns):
 lookup_tables.append(
   ('arpeggiator_patterns', ConvertPatterns([
       'oooo -ooo o-oo oo-o',
-      'o-o- o-o- o-o- o-o-',
+      'oooo oooo oooo oooo',
       '--oo oooo oooo oooo'])))
 
 lookup_tables.append(
