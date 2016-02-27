@@ -448,14 +448,12 @@ void Arpeggiator::SetParameter(uint8_t key, uint8_t value) {
       // Force the arp back on
       arp_on_ = 1;
 
-      int preset_num_ = preset_ - 1;
-
       // Set all preset values
-      direction_         = arpeggiator_presets[preset_num_][0];
-      num_octaves_       = arpeggiator_presets[preset_num_][1];
-      pattern_           = arpeggiator_presets[preset_num_][2];
-      pattern_length_    = arpeggiator_presets[preset_num_][3];
-      pattern_           = arpeggiator_presets[preset_num_][4];
+      direction_         = arpeggiator_presets[preset_][0];
+      num_octaves_       = arpeggiator_presets[preset_][1];
+      pattern_           = arpeggiator_presets[preset_][2];
+      pattern_length_    = arpeggiator_presets[preset_][3];
+      pattern_           = arpeggiator_presets[preset_][4];
 
       // Set the direction
       current_direction_ = (direction_ == ARPEGGIO_DIRECTION_DOWN ? -1 : 1);
