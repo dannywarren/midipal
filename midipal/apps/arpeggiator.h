@@ -77,13 +77,15 @@ class Arpeggiator {
   static uint8_t tick_;
   static uint8_t idle_ticks_;
   static uint16_t bitmask_;
+  static uint8_t counter_;
   static int8_t current_direction_;
   static int8_t current_octave_;
   static int8_t current_step_;
   
   static uint8_t ignore_note_off_messages_;
   static uint8_t recording_;
-  
+  static uint8_t transposition_;
+
   DISALLOW_COPY_AND_ASSIGN(Arpeggiator);
 };
 

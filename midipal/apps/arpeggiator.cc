@@ -47,6 +47,19 @@ const prog_uint8_t arpeggiator_factory_data[15] PROGMEM = {
   1, 120, 0, 0, 15, 0, 1, 0, 16, 12, 14, 0, 0, 1, 0
 };
 
+const prog_uint8_t transposition_patterns[2][16] = {
+  
+  // Null pattern
+  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+
+  // Goliath verse pattern
+  { 12,  3 , 12, 0,   
+     0,  0,  12, 3, 
+     12, 0,  0,  12, 
+     0, 12,  0,  12 }
+
+};
+
 const prog_uint8_t arpeggiator_presets[6][5] = {
 
   // up, down, up+down
@@ -89,11 +102,13 @@ uint8_t Arpeggiator::midi_clock_prescaler_;
 uint8_t Arpeggiator::tick_;
 uint8_t Arpeggiator::idle_ticks_;
 uint16_t Arpeggiator::bitmask_;
+uint8_t Arpeggiator::counter_;
 int8_t Arpeggiator::current_direction_;
 int8_t Arpeggiator::current_octave_;
 int8_t Arpeggiator::current_step_;
 uint8_t Arpeggiator::ignore_note_off_messages_;
 uint8_t Arpeggiator::recording_;
+uint8_t Arpeggiator::transposition_;
 /* </static> */
 
 /* static */
@@ -136,7 +151,7 @@ void Arpeggiator::OnInit() {
   ui.AddPage(STR_RES_CHN, UNIT_INDEX, 0, 15);
   ui.AddPage(STR_RES_DIR, STR_RES_UP, 0, 5);
   ui.AddPage(STR_RES_OCT, UNIT_INTEGER, 1, 4);
-  ui.AddPage(STR_RES_PTN, UNIT_INDEX, 0, 23);
+  ui.AddPage(STR_RES_PTN, UNIT_INDEX, 0, 2);
   ui.AddPage(STR_RES_LEN, UNIT_INTEGER, 1, 16);
   ui.AddPage(STR_RES_DIV, STR_RES_2_1, 0, 16);
   ui.AddPage(STR_RES_DUR, STR_RES_2_1, 0, 16);
@@ -303,7 +318,11 @@ void Arpeggiator::Tick() {
         }
         uint8_t note = arpeggio_note->note;
         uint8_t velocity = arpeggio_note->velocity;
-        note += 12 * current_octave_;
+        uint8_t transposition_shift = 0;
+        if ( transposition_ > 0 ) {
+          transposition_patterns[transposition_][counter_];
+        }
+        note += ( 12 * current_octave_ ) + transposition_shift;
         while (note > 127) {
           note -= 12;
         }
@@ -319,6 +338,13 @@ void Arpeggiator::Tick() {
     if (bitmask_ == (1 << pattern_length_) || bitmask_ == 0) {
       bitmask_ = 1;
     }
+
+    counter_ = counter_ + 1;
+    if ( counter_ >= pattern_length_ )
+    {
+      counter_ = 0;
+    }
+
   }
 }
 
@@ -326,6 +352,7 @@ void Arpeggiator::Tick() {
 void Arpeggiator::Start() {
   running_ = 1;
   bitmask_ = 1;
+  counter_ = 0;
   tick_ = midi_clock_prescaler_ - 1;
   current_direction_ = (direction_ == ARPEGGIO_DIRECTION_DOWN ? -1 : 1);
   current_octave_ = 127;
